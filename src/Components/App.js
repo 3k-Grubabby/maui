@@ -15,12 +15,33 @@ const getExerciseByMuscles = ()=>{
 }
 
 
+
+
 const App = ()=>{
-  const exercises =  getExerciseByMuscles();
+  const [category,setCaregory] = useState('');
+  const [exercise,setExercise] = useState({});
+
+
+  const handleCategorySelected = (category)=>{
+    setCaregory(category)
+  }
+  const handleExerciseSelected = id =>{
+    setExercise(exercises.find(ex=>ex.id === id ))
+  }
+
+
+  
       return <Fragment>
             <Header />
-            <Exercises exercises={exercises} />
-            <Footer 
+            <Exercises 
+              category={category}
+              exercises={getExerciseByMuscles()}
+              exercise={exercise}
+              onSelect={handleExerciseSelected}
+             />
+            <Footer
+              category={category}
+              onSelect={handleCategorySelected}
               muscles={muscles}
             />
       </Fragment>

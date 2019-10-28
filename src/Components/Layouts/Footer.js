@@ -1,11 +1,21 @@
 import React from 'react';
 import {Paper,Tabs, Tab} from '@material-ui/core';
 
-const Footer = ({muscles})=>{
+
+
+const Footer = ({muscles,category,onSelect})=>{
+  const index = category ? muscles.findIndex(group=>group===category)+1 : 0;
+  
+  const onIndexSelect = (e,index)=>{
+    console.log(muscles[index-1])
+    onSelect(index===0?'':muscles[index-1])
+  }
+
   return (
     <Paper>
         <Tabs
-          value={0}
+          value={index}
+          onChange={onIndexSelect}
           indicatorColor="primary"
           textColor="inherit"
           centered
