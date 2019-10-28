@@ -32,7 +32,9 @@ const App = ()=>{
 
   
       return <Fragment>
-            <Header />
+            <Header 
+              muscles={muscles}
+            />
             <Exercises 
               category={category}
               exercises={getExerciseByMuscles()}
