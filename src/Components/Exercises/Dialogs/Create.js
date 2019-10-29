@@ -16,23 +16,33 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import { makeStyles } from '@material-ui/core/styles';
+
+const styles = makeStyles(theme => ({
+    FormControl: {
+        width:500
+    }
+}));
 
 
 
-export default ({categories}) =>{
-
+export default ({categories,onCreate}) =>{
+    const classes = styles();
   const [open,setOpen] = useState(false);
   const [values,setValues] = useState({
     title : 'Cat is the Hat',
     description : 'test 5 ',
-    muscles : 'his si cat'
-
-  })
+    muscles : 'his si cat',
+  });
   const handleChange = name =>event=>{
     setValues({...values,[name]:event.target.value})
-  }
+  };
 
+ const handleSubmit = ()=>{
+     setOpen(!open);
+     onCreate({...values,id:values.title.toLocaleLowerCase().replace(/ /g,'-')})
 
+ };
 
   return (
     <Fragment>
@@ -52,17 +62,17 @@ export default ({categories}) =>{
                       value={values.title}
                       onChange={handleChange('title')}
                       margin="normal"
+                      className={classes.FormControl}
                     />
 
                     <br />
-                    <FormControl >
-                          <InputLabel htmlFor="muscles">Nuscles</InputLabel>
+                    <FormControl  className={classes.FormControl} >
+                          <InputLabel htmlFor="muscles">Muscles</InputLabel>
                           <Select
                             value={values.muscles}
                             onChange={handleChange('muscles')}
                           >
                             {
-
                               categories.map((category,index)=>{
                                 return <MenuItem key={index} value={category}>{category}</MenuItem>
                               })
@@ -70,10 +80,11 @@ export default ({categories}) =>{
 
                           </Select>
                     </FormControl>
+
                     <br />
                     <TextField
+                      className={classes.FormControl}
                       label="Description"
-                      label="Multiline"
                       multiline
                       rows="4"
                       value={values.description}
@@ -87,7 +98,7 @@ export default ({categories}) =>{
                 </DialogContent>
                 <DialogActions>
 
-                <Button   color="primary" onClick={()=>{setOpen(!open)}}>
+                <Button   color="primary" onClick={handleSubmit}>
                     Subscribe
                 </Button>
                 </DialogActions>

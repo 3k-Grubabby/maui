@@ -29,7 +29,6 @@ export default ({
                             exercises.map(([group,exercises])=>
                                 
                             {
-                               console.log(category)
                             return   !category || category === group
                                     ?   <Typography
                                                     variant='inherit'

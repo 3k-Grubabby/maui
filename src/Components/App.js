@@ -1,39 +1,40 @@
-import React,{Fragment,useState} from 'react';
+import React,{Fragment,useState,useEffect} from 'react';
 import {Header,Footer} from './Layouts';
 import Exercises from './Exercises';
 import {muscles,exercises} from '../store'
 
 
-const getExerciseByMuscles = ()=>{
-  return Object.entries(
-    exercises.reduce((exercises,exercise)=>{
-      const {muscles} = exercise
-      exercises[muscles] = exercises[muscles]?[...exercises[muscles],exercise]:[exercise]
-      return exercises
-    },{})
-  )
-}
-
-
-
-
 const App = ()=>{
   const [category,setCaregory] = useState('');
   const [exercise,setExercise] = useState({});
+  const [data,setData] = useState(exercises);
 
+
+  const getExerciseByMuscles = ()=>{
+      return Object.entries(
+          data.reduce((exercises,exercise)=>{
+          const {muscles} = exercise
+          exercises[muscles] = exercises[muscles]?[...exercises[muscles],exercise]:[exercise]
+          return exercises
+        },{})
+      )
+  };
 
   const handleCategorySelected = (category)=>{
     setCaregory(category)
-  }
+  };
   const handleExerciseSelected = id =>{
-    setExercise(exercises.find(ex=>ex.id === id ))
-  }
-
+    setExercise(data.find(ex=>ex.id === id ))
+  };
+  const handleExerciseCreate = (exercise)=>{
+      setData([...exercises,exercise]);
+  };
 
   
       return <Fragment>
             <Header 
               muscles={muscles}
+              onExerciseCreate={handleExerciseCreate}
             />
             <Exercises 
               category={category}
