@@ -11,12 +11,18 @@ const App = ()=>{
 
 
   const getExerciseByMuscles = ()=>{
+      const initExercise = muscles.reduce((exercises,category)=>({
+        ...exercises,
+        [category]:[]
+      }),{})
+
+
       return Object.entries(
           data.reduce((exercises,exercise)=>{
           const {muscles} = exercise
-          exercises[muscles] = exercises[muscles]?[...exercises[muscles],exercise]:[exercise]
+          exercises[muscles] = [...exercises[muscles],exercise]
           return exercises
-        },{})
+        },initExercise)
       )
   };
 
@@ -30,6 +36,10 @@ const App = ()=>{
       setData([...exercises,exercise]);
   };
 
+  const handleExerciseDelete = id =>{
+      setData(data.filter(ex => ex.id !== id))
+  }
+
   
       return <Fragment>
             <Header 
@@ -41,6 +51,7 @@ const App = ()=>{
               exercises={getExerciseByMuscles()}
               exercise={exercise}
               onSelect={handleExerciseSelected}
+              onDelete={handleExerciseDelete}
              />
             <Footer
               category={category}
