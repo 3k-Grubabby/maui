@@ -27,7 +27,7 @@ const styles = makeStyles(theme => ({
 
 
 export default ({categories,onCreate}) =>{
-    const classes = styles();
+ const classes = styles();
   const [open,setOpen] = useState(false);
   const [values,setValues] = useState({
     title : 'Cat is the Hat',
